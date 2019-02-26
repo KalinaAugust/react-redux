@@ -1,0 +1,16 @@
+
+.Title {
+    text-align: center;
+    font-style: italic;
+}
+
+.Img {
+    height: auto;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.ImgName {
+    font-style: italic;
+    color: #969696;
+}
