@@ -4,8 +4,9 @@ import { connect } from "react-redux";
 import classes from './App.css';
 import StartScreen from '../../components/StartScreen/StartScreen';
 import Tabs from '../../components/Tabs/Tabs';
+import { changeTitle } from '../../store/app/actions';
+import { clearStore } from '../../store/actions';
 
-import { changeTitle } from '../../store/actions';
 
 
 class App extends Component {
@@ -17,11 +18,8 @@ class App extends Component {
         };
     }
 
-
-
-
     goToNextScreen = () => {
-        if ( this.props.defaultTitle.length < 1) {
+        if ( this.props.tabTitle.length < 1) {
             return;
         }
 
@@ -30,10 +28,13 @@ class App extends Component {
         )
     };
 
-
+    returnStorageToDefault = () => {
+        this.props.clearStore();
+        this.setState( {showStartScreen: true} )
+    };
 
     render() {
-        const { defaultTitle, changeTitle } = this.props;
+        const { tabTitle, changeTitle } = this.props;
 
         let startScreen = null;
         let tabs = null;
@@ -41,7 +42,7 @@ class App extends Component {
         if (this.state.showStartScreen) {
             startScreen = (
                 <StartScreen
-                    data={defaultTitle}
+                    data={tabTitle}
                     btnClicked={this.goToNextScreen}
                     changed={(event) => {
                        changeTitle(event.target.value)
@@ -50,7 +51,10 @@ class App extends Component {
             )
         } else {
             tabs =(
-                <Tabs title={defaultTitle}/>
+                <Tabs
+                    clearStore={this.returnStorageToDefault}
+                    title={tabTitle}
+                />
             )
         }
 
@@ -67,13 +71,14 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        defaultTitle: state.defaultTitle
+        tabTitle: state.app.tabTitle
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        changeTitle: bindActionCreators(changeTitle, dispatch)
+        changeTitle: bindActionCreators(changeTitle, dispatch),
+        clearStore: bindActionCreators(clearStore, dispatch)
     }
 };
 

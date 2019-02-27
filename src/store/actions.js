@@ -1,8 +1,7 @@
-export const ACTION_CHANGE_TITLE = 'ACTION_CHANGE_TITLE';
+export const ACTION_CLEAR_STORE = 'ACTION_CLEAR_STORE';
 
-export const changeTitle = (newTitle) => {
+export const clearStore = () => {
     return {
-        type: ACTION_CHANGE_TITLE,
-        payload: newTitle
+        type: ACTION_CLEAR_STORE
     }
 };

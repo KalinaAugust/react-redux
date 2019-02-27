@@ -1,15 +1,24 @@
-import { ACTION_CHANGE_TITLE } from './actions';
-
-const initialState = {
-    defaultTitle: 'default Title from redux'
-};
+import { combineReducers } from 'redux';
+import { appReducer } from './app/reducers';
+import { tabWrapperReducer } from './tabWrapper/reducers';
 
 
-export const rootReducer = (state = initialState, action) => {
 
-    switch (action.type) {
-        case ACTION_CHANGE_TITLE:
-            return { ...state, defaultTitle: action.payload };
-        default: return state;
+
+const mainReducer = combineReducers({
+    app: appReducer,
+    tabWrapper: tabWrapperReducer
+});
+
+
+const rootReducer = (state, action) => {
+    if (action.type === 'ACTION_CLEAR_STORE') {
+        state = undefined;
     }
+
+    return mainReducer(state, action);
 };
+
+
+
+export default rootReducer;

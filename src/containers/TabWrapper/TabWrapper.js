@@ -4,6 +4,12 @@ import TabItem from '../../components/TabItem/TabItem';
 import DataInput from '../../components/DataInput/DataInput';
 import VPlayer from '../../components/VPlayer/VPlayer';
 import ImgBlock from '../../components/ImgBlock/ImgBlock';
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
+
+import { changeVideoUrl } from '../../store/tabWrapper/actions';
+
+
 
 
 class TabWrapper extends Component {
@@ -11,7 +17,6 @@ class TabWrapper extends Component {
         super(props);
 
         this.state = {
-            videoUrl: '',
             temporalVideoUrl: '',
             currentTabIndex: 0,
             tabSwitchers: [
@@ -46,11 +51,8 @@ class TabWrapper extends Component {
     };
 
     switcherClickHandler = (id) => {
-        let { currentTabIndex } = this.state;
-        currentTabIndex = id;
-
         this.setState(
-            {currentTabIndex: currentTabIndex}
+            {currentTabIndex: id}
         )
     };
 
@@ -76,7 +78,7 @@ class TabWrapper extends Component {
             });
     };
 
-    setVideoUrl = (event) => {
+    setTemporalVideoUrl = (event) => {
         let { temporalVideoUrl } = this.state;
         temporalVideoUrl = event.target.value;
 
@@ -85,33 +87,39 @@ class TabWrapper extends Component {
         )
     };
 
+    saveVideoUrlToStore = () => {
+        let { temporalVideoUrl } = this.state;
 
-    saveVideoUrl = () => {
-        this.setState(
-            {videoUrl: this.state.temporalVideoUrl}
-        )
+        if (temporalVideoUrl.length < 1) {
+            return;
+        }
+
+        this.props.changeVideoUrl(temporalVideoUrl);
     };
 
 
     render() {
-        const { tabSwitchers } = this.state;
+        const { tabSwitchers, temporalVideoUrl, imgBlockData } = this.state;
         const currentTabTitle = tabSwitchers[this.state.currentTabIndex].title;
+
+        const { videoUrl } = this.props;
+
 
         const tabComponents = [
             <DataInput
                 id="setUrl"
                 placeholder="Enter URL here"
-                data={this.state.temporalVideoUrl}
-                changed={ (event) => this.setVideoUrl(event) }
-                btnClicked={this.saveVideoUrl}
+                data={temporalVideoUrl}
+                changed={ (event) => this.setTemporalVideoUrl(event) }
+                btnClicked={ this.saveVideoUrlToStore  }
                 btnText="SAVE"
                 label="SRC:"
             />,
             <VPlayer
-                videoUrl={this.state.videoUrl}
+                videoUrl={videoUrl}
             />,
             <ImgBlock
-                data={this.state.imgBlockData}
+                data={imgBlockData}
                 getCatPic={this.getCatPic}
             />
         ];
@@ -132,4 +140,18 @@ class TabWrapper extends Component {
     }
 }
 
-export default TabWrapper;
+
+const mapStateToProps = (state) => {
+    return {
+        videoUrl: state.tabWrapper.videoUrl
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        changeVideoUrl: bindActionCreators(changeVideoUrl, dispatch)
+    }
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(TabWrapper);
