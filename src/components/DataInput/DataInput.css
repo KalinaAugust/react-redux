@@ -1,0 +1,52 @@
+.DataInput {
+    padding: 30px;
+    border: 2px dashed #969696;
+    border-radius: 5px;
+}
+
+.Show_button {
+    display: block;
+    background-color: #90EE90;
+    height: 50px;
+    width: 150px;
+    font-size: 22px;
+    color: #000;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 35px;
+    line-height: 50px;
+    border: 1px solid #969696;
+    transition: .3s;
+}
+
+.Show_button:hover {
+    border-color: #000;
+    background-color: #5aee52;
+}
+
+.Show_button.Disable {
+    background-color: #bcbcbc;
+}
+
+.Label {
+    font-size: 22px;
+}
+
+.Input {
+    height: 50px;
+    width: 400px;
+    border: 1px solid #969696;
+    font-size: 18px;
+    padding-left: 20px;
+    margin-left: 20px;
+    transition: .3s;
+}
+
+.Input:focus {
+    border-color: #000;
+    outline: none;
+}
+
+.Input::placeholder {
+    color: #bcbcbc;
+}

@@ -1,0 +1,11 @@
+.TabItem {
+    border: 1px solid #969696;
+    padding: 15px 25px 25px 25px;
+}
+
+.Title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    padding-bottom: 25px;
+}
