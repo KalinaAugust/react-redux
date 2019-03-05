@@ -17,15 +17,15 @@
     line-height: 50px;
     border: 1px solid #969696;
     transition: .3s;
-}
 
-.Show_button:hover {
-    border-color: #000;
-    background-color: #5aee52;
-}
+    &.Disable {
+        background-color: #bcbcbc;
+    }
 
-.Show_button.Disable {
-    background-color: #bcbcbc;
+    &:hover {
+        border-color: #000;
+        background-color: #5aee52;
+    }
 }
 
 .Label {
@@ -40,13 +40,13 @@
     padding-left: 20px;
     margin-left: 20px;
     transition: .3s;
-}
 
-.Input:focus {
-    border-color: #000;
-    outline: none;
-}
+    &:focus {
+        border-color: #000;
+        outline: none;
+    }
 
-.Input::placeholder {
-    color: #bcbcbc;
+    &::placeholder {
+        color: #bcbcbc;
+    }
 }

@@ -16,20 +16,20 @@
     border-bottom: 1px solid #333333;
     border-left: 1px solid #333333;
     width: 33.33333%;
-}
 
-.Switcher:hover {
-    background-color: lightcyan;
-}
+    &:hover {
+        background-color: lightcyan;
+    }
 
-.Switcher.current {
-    background-color: lightcyan;
-}
+    &.current {
+        background-color: lightcyan;
+    }
 
-.Switcher:nth-child(3) {
-    border-right:  1px solid #333333;
+    &:nth-child(3) {
+        border-right:  1px solid #333333;
+    }
 }
 
 .TabItemsBlock {
-
+    border: 1px solid #969696;
 }
