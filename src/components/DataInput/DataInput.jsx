@@ -7,7 +7,7 @@ const DataInput = (props) => {
   const {
     data, id, label, changed, placeholder, btnText, btnClicked,
   } = props;
-  const disabled = data.length ? '' : 'disabled';
+  const disabled = data.length ? '' : classes.disabled;
   const btnClass = `${classes.Show_button} ${disabled}`;
 
   return (

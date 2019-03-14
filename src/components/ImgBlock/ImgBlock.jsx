@@ -18,11 +18,13 @@ class ImgBlock extends Component {
     return (
       <div>
         <div className={classes.Title}>AJAX REQUEST</div>
-        <img
-          className={classes.Img}
-          src={imgDirectUrl}
-          alt={imgName}
-        />
+        {imgDirectUrl ? (
+          <img
+            className={classes.Img}
+            src={imgDirectUrl}
+            alt={imgName}
+          />
+        ) : <h1 style={{ textAlign: 'center', padding: '70px' }}>loading...</h1>}
         <div className={classes.ImgName}>{imgName}</div>
       </div>
     );

@@ -107,7 +107,6 @@ class TabWrapper extends Component {
           <div className={classes.tabSwitchers}>
             {this.renderTabSwitchers(tabSwitchers)}
           </div>
-          currentTabIndex
           <div className={classes.TabItemsBlock}>
             <TabItem title={currentTabTitle}>
               <TabComponent

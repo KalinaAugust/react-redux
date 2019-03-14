@@ -9,6 +9,7 @@ const tabWrapperReducer = (state = defaultState, action) => {
   switch (action.type) {
     case ACTION_CHANGE_VIDEO_URL:
       return { ...state, videoUrl: action.payload };
+
     default: return state;
   }
 };
