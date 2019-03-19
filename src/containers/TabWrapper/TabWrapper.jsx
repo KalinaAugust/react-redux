@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import classes from './TabWrapper.scss';
 import TabItem from '../../components/TabItem/TabItem';
 import TabComponent from '../../components/TabComponent/TabComponent';
-import { changeVideoUrl } from '../../store/tabWrapper/actions';
 
 
+@inject('MobxStore')
+@observer
 class TabWrapper extends Component {
   constructor(props) {
     super(props);
@@ -84,13 +84,13 @@ class TabWrapper extends Component {
 
     saveVideoUrlToStore = () => {
       const { temporalVideoUrl } = this.state;
-      const { changeVideoUrlHandler } = this.props;
+      const { MobxStore: { changeVideoUrl } } = this.props;
 
       if (temporalVideoUrl.length < 1) {
         return;
       }
 
-      changeVideoUrlHandler(temporalVideoUrl);
+      changeVideoUrl(temporalVideoUrl);
     };
 
 
@@ -99,8 +99,7 @@ class TabWrapper extends Component {
         tabSwitchers, temporalVideoUrl, imgBlockData, currentTabIndex,
       } = this.state;
       const currentTabTitle = tabSwitchers[currentTabIndex].title;
-      const { videoUrl } = this.props;
-
+      const { MobxStore: { videoUrl } } = this.props;
 
       return (
         <div className={classes.TabWrapper}>
@@ -126,17 +125,7 @@ class TabWrapper extends Component {
 }
 
 TabWrapper.propTypes = {
-  videoUrl: PropTypes.string.isRequired,
-  changeVideoUrlHandler: PropTypes.func.isRequired,
+  MobxStore: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  videoUrl: state.tabWrapper.videoUrl,
-});
-
-const mapDispatchToProps = dispatch => ({
-  changeVideoUrlHandler: bindActionCreators(changeVideoUrl, dispatch),
-});
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(TabWrapper);
+export default TabWrapper;

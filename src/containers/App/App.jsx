@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import classes from './App.scss';
 import StartScreen from '../../components/StartScreen/StartScreen';
 import Tabs from '../../components/Tabs/Tabs';
-import { changeTitle } from '../../store/app/actions';
-import { clearStore } from '../../store/actions';
 
 
+@inject('MobxStore')
+@observer
 class App extends Component {
   constructor(props) {
     super(props);
@@ -20,8 +19,8 @@ class App extends Component {
 
 
     goToNextScreen = () => {
-      const { tabTitle } = this.props;
       const { showStartScreen } = this.state;
+      const { MobxStore: { tabTitle } } = this.props;
 
       if (tabTitle.length < 1) {
         return;
@@ -32,29 +31,36 @@ class App extends Component {
       );
     };
 
-    returnStorageToDefault = () => {
-      const { clearStoreHandler } = this.props;
+    clearStoreHandler = () => {
+      const { MobxStore: { clearStoreHandler } } = this.props;
 
       clearStoreHandler();
       this.setState({ showStartScreen: true });
     };
 
+    changeTabTitle = (value) => {
+      const { MobxStore: { changeTitle } } = this.props;
+
+      changeTitle(value);
+    };
+
     render() {
       const { showStartScreen } = this.state;
-      const { changeTitleHandler, tabTitle } = this.props;
+      const { MobxStore: { getTitle } } = this.props;
+
       const startScreen = (
         <StartScreen
-          data={tabTitle}
+          data={getTitle}
           btnClicked={this.goToNextScreen}
           changed={(event) => {
-            changeTitleHandler(event.target.value);
+            this.changeTabTitle(event.target.value);
           }}
         />
       );
       const tabs = (
         <Tabs
-          clearStore={this.returnStorageToDefault}
-          title={tabTitle}
+          clearStore={this.clearStoreHandler}
+          title={getTitle}
         />
       );
 
@@ -67,21 +73,8 @@ class App extends Component {
     }
 }
 
-
 App.propTypes = {
-  tabTitle: PropTypes.string.isRequired,
-  clearStoreHandler: PropTypes.func.isRequired,
-  changeTitleHandler: PropTypes.func.isRequired,
+  MobxStore: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  tabTitle: state.app.tabTitle,
-});
-
-const mapDispatchToProps = dispatch => ({
-  changeTitleHandler: bindActionCreators(changeTitle, dispatch),
-  clearStoreHandler: bindActionCreators(clearStore, dispatch),
-});
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

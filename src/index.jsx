@@ -1,19 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
+import { Provider } from 'mobx-react';
 import * as serviceWorker from './serviceWorker';
 import App from './containers/App/App';
-import rootReducer from './store/reducers';
-
-const store = createStore(rootReducer);
+import MobxStore from './store/mobX-Store';
 
 
-ReactDOM.render(
-  <Provider store={store}>
+const Root = (
+  <Provider MobxStore={MobxStore}>
     <App />
-  </Provider>, document.getElementById('root'),
+  </Provider>
 );
+
+
+ReactDOM.render(Root, document.getElementById('root'));
 
 serviceWorker.unregister();
